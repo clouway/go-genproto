@@ -20,7 +20,7 @@ func TestEncodeHTTPGenericResponse(t *testing.T) {
 	httpkit.EncodeHTTPGenericResponse(context.Background(), w, protoResponse)
 	b, _ := ioutil.ReadAll(w.Result().Body)
 	body := string(b)
-	want := `{"reason":"Test Reason","domain":"","metadata":{}}`
+	want := `{"reason":"Test Reason", "domain":"", "metadata":{}}`
 
 	if body != want {
 		t.Errorf("unexpected response of EncodeHTTPGenericResponse:\n- want: %v\n-  got: %v", want, body)
@@ -94,7 +94,7 @@ func TestEncodeHTTPGenericResponseWithEmptySlice(t *testing.T) {
 
 	b, _ := ioutil.ReadAll(w.Result().Body)
 	body := string(b)
-	want := `{"message":"","errors":[]}`
+	want := `{"message":"", "errors":[]}`
 
 	if body != want {
 		t.Errorf("unexpected response of EncodeHTTPGenericResponse:\n- want: %v\n-  got: %v", want, body)
