@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/clouway/go-genproto/clouwayapis/rpc/fileserve"
@@ -22,7 +23,10 @@ func UnmarshalJSON(b []byte, m proto.Message) error {
 // the response as JSON to the response writer. Primarily useful in a server.
 func EncodeHTTPGenericResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
 	if f, ok := response.(*fileserve.BinaryFile); ok {
-		w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", f.FileName))
+		w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", url.QueryEscape(f.FileName)))
+		if f.ContentType == "application/pdf" {
+			w.Header().Set("Content-Disposition", fmt.Sprintf("inline; filename=%s", url.QueryEscape(f.FileName)))
+		}
 		w.Header().Set("Content-Type", f.ContentType)
 		w.Write(f.Content)
 		return nil
