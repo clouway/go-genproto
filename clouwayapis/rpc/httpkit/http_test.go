@@ -2,7 +2,7 @@ package httpkit_test
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"reflect"
@@ -18,7 +18,7 @@ func TestEncodeHTTPGenericResponse(t *testing.T) {
 	protoResponse := &errdetails.ErrorInfo{Reason: "Test Reason"}
 	w := httptest.NewRecorder()
 	httpkit.EncodeHTTPGenericResponse(context.Background(), w, protoResponse)
-	b, _ := ioutil.ReadAll(w.Result().Body)
+	b, _ := io.ReadAll(w.Result().Body)
 	body := string(b)
 	want := `{"reason":"Test Reason", "domain":"", "metadata":{}}`
 
@@ -33,7 +33,7 @@ func TestEncodeBinaryFile(t *testing.T) {
 	w := httptest.NewRecorder()
 	httpkit.EncodeHTTPGenericResponse(context.Background(), w, protoResponse)
 
-	b, _ := ioutil.ReadAll(w.Result().Body)
+	b, _ := io.ReadAll(w.Result().Body)
 	contentDisposition := w.Header().Get("Content-Disposition")
 	contentType := w.Header().Get("Content-Type")
 
@@ -63,7 +63,7 @@ func TestEncodePDFDocument(t *testing.T) {
 	w := httptest.NewRecorder()
 	httpkit.EncodeHTTPGenericResponse(context.Background(), w, protoResponse)
 
-	b, _ := ioutil.ReadAll(w.Result().Body)
+	b, _ := io.ReadAll(w.Result().Body)
 	contentDisposition := w.Header().Get("Content-Disposition")
 	contentType := w.Header().Get("Content-Type")
 
@@ -88,13 +88,18 @@ func TestEncodePDFDocument(t *testing.T) {
 }
 
 func TestEncodeHTTPGenericResponseWithEmptySlice(t *testing.T) {
-	protoResponse := &errdetails.BadRequest{Errors: []*errdetails.BadRequest_FieldViolation{}}
+	protoResponse := &errdetails.BadRequest{
+		Errors:  []*errdetails.BadRequest_FieldViolation{},
+		Message: "Order not found",
+		Code:    "ORDER_NOT_FOUND",
+		Details: []string{"order1"},
+	}
 	w := httptest.NewRecorder()
 	httpkit.EncodeHTTPGenericResponse(context.Background(), w, protoResponse)
 
-	b, _ := ioutil.ReadAll(w.Result().Body)
+	b, _ := io.ReadAll(w.Result().Body)
 	body := string(b)
-	want := `{"message":"", "errors":[]}`
+	want := `{"message":"Order not found", "errors":[], "code":"ORDER_NOT_FOUND", "details":["order1"]}`
 
 	if body != want {
 		t.Errorf("unexpected response of EncodeHTTPGenericResponse:\n- want: %v\n-  got: %v", want, body)

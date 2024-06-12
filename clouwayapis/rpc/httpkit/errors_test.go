@@ -2,7 +2,7 @@ package httpkit_test
 
 import (
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -26,6 +26,7 @@ type want struct {
 }
 
 type test struct {
+	name  string
 	input input
 	want  want
 }
@@ -53,7 +54,7 @@ func TestEncodeJsonError(t *testing.T) {
 
 	httpkit.ErrorEncoder(context.Background(), httpErr, rec)
 
-	body, _ := ioutil.ReadAll(rec.Body)
+	body, _ := io.ReadAll(rec.Body)
 
 	gotBody := string(body)
 	wantBody := `{"errorCode":400,"errorMessages":[{"languageCode":"en","errorMessage":"english error message"}]}`
@@ -65,6 +66,7 @@ func TestEncodeJsonError(t *testing.T) {
 func TestEncodeProtoError(t *testing.T) {
 	tests := []test{
 		{
+			name:  "not found",
 			input: input{code: codes.NotFound, message: "not found", details: nil},
 			want: want{
 				headers: map[string]string{"Content-Type": "application/json; charset=utf-8"},
@@ -73,6 +75,7 @@ func TestEncodeProtoError(t *testing.T) {
 			},
 		},
 		{
+			name:  "already exists",
 			input: input{code: codes.AlreadyExists, message: "already exists", details: nil},
 			want: want{
 				headers: map[string]string{"Content-Type": "application/json; charset=utf-8"},
@@ -81,6 +84,7 @@ func TestEncodeProtoError(t *testing.T) {
 			},
 		},
 		{
+			name:  "already exists with details",
 			input: input{code: codes.AlreadyExists, details: &errdetails.BadRequest{Message: "item already added"}},
 			want: want{
 				headers: map[string]string{"Content-Type": "application/json; charset=utf-8"},
@@ -89,6 +93,7 @@ func TestEncodeProtoError(t *testing.T) {
 			},
 		},
 		{
+			name: "already exists with details and field violation",
 			input: input{
 				code: codes.AlreadyExists,
 				details: &errdetails.BadRequest{
@@ -101,34 +106,36 @@ func TestEncodeProtoError(t *testing.T) {
 			want: want{
 				headers: map[string]string{"Content-Type": "application/json; charset=utf-8"},
 				status:  http.StatusConflict,
-				body:    `{"message":"item already added","errors":[{"reason":"Item with id '123' already exists","field":"itemId"}]}`,
+				body:    `{"message":"item already added", "errors":[{"reason":"Item with id '123' already exists", "field":"itemId"}]}`,
 			},
 		},
 	}
 	for _, test := range tests {
-		st := status.New(test.input.code, test.input.message)
-		if test.input.details != nil {
-			st, _ = st.WithDetails(test.input.details)
-		}
+		t.Run(test.name, func(t *testing.T) {
+			st := status.New(test.input.code, test.input.message)
+			if test.input.details != nil {
+				st, _ = st.WithDetails(test.input.details)
+			}
 
-		rec := httptest.NewRecorder()
-		httpkit.ErrorEncoder(context.Background(), st.Err(), rec)
+			rec := httptest.NewRecorder()
+			httpkit.ErrorEncoder(context.Background(), st.Err(), rec)
 
-		for whn, whv := range test.want.headers {
-			headerValue := rec.Header().Get(whn)
-			if headerValue != whv {
-				t.Errorf("unexpected header returned:\n- want: %v\n-  got: %v", whv, headerValue)
+			for whn, whv := range test.want.headers {
+				headerValue := rec.Header().Get(whn)
+				if headerValue != whv {
+					t.Errorf("unexpected header returned:\n- want: %v\n-  got: %v", whv, headerValue)
+					return
+				}
+			}
+			if rec.Result().StatusCode != test.want.status {
+				t.Errorf("unexpected status code:\n- want: %v\n-  got: %v", test.want.status, rec.Result().StatusCode)
 				return
 			}
-		}
-		if rec.Result().StatusCode != test.want.status {
-			t.Errorf("unexpected status code:\n- want: %v\n-  got: %v", test.want.status, rec.Result().StatusCode)
-			return
-		}
-		body, _ := ioutil.ReadAll(rec.Body)
-		sbody := string(body)
-		if sbody != test.want.body {
-			t.Errorf("unexpected body:\n- want: %v\n-  got: %v", test.want.body, sbody)
-		}
+			body, _ := io.ReadAll(rec.Body)
+			sbody := string(body)
+			if sbody != test.want.body {
+				t.Errorf("unexpected body:\n- want: %v\n-  got: %v", test.want.body, sbody)
+			}
+		})
 	}
 }
