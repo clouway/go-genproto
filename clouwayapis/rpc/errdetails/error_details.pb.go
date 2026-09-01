@@ -231,6 +231,91 @@ func (x *UnprocessableEntityError) GetDetails() []string {
 	return nil
 }
 
+// CanonicalError transports the semantic error metadata used by services.
+type CanonicalError struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The canonical error kind, for example "invalid" or "data_conflict".
+	Kind string `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`
+	// The stable application-specific error code.
+	Code string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	// The client-safe error message.
+	Message string `protobuf:"bytes,3,opt,name=message,proto3" json:"message,omitempty"`
+	// Structured validation violations.
+	Violations []*CanonicalError_FieldViolation `protobuf:"bytes,4,rep,name=violations,proto3" json:"violations,omitempty"`
+	// Additional client-safe details.
+	Details []string `protobuf:"bytes,5,rep,name=details,proto3" json:"details,omitempty"`
+}
+
+func (x *CanonicalError) Reset() {
+	*x = CanonicalError{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CanonicalError) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CanonicalError) ProtoMessage() {}
+
+func (x *CanonicalError) ProtoReflect() protoreflect.Message {
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CanonicalError.ProtoReflect.Descriptor instead.
+func (*CanonicalError) Descriptor() ([]byte, []int) {
+	return file_clouway_rpc_errdetails_error_details_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CanonicalError) GetKind() string {
+	if x != nil {
+		return x.Kind
+	}
+	return ""
+}
+
+func (x *CanonicalError) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CanonicalError) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *CanonicalError) GetViolations() []*CanonicalError_FieldViolation {
+	if x != nil {
+		return x.Violations
+	}
+	return nil
+}
+
+func (x *CanonicalError) GetDetails() []string {
+	if x != nil {
+		return x.Details
+	}
+	return nil
+}
+
 // Describes the cause of the error with structured details.
 //
 // Example of an error when contacting the "pubsub.googleapis.com" API when it
@@ -276,7 +361,7 @@ type ErrorInfo struct {
 func (x *ErrorInfo) Reset() {
 	*x = ErrorInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[3]
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -289,7 +374,7 @@ func (x *ErrorInfo) String() string {
 func (*ErrorInfo) ProtoMessage() {}
 
 func (x *ErrorInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[3]
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -302,7 +387,7 @@ func (x *ErrorInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ErrorInfo.ProtoReflect.Descriptor instead.
 func (*ErrorInfo) Descriptor() ([]byte, []int) {
-	return file_clouway_rpc_errdetails_error_details_proto_rawDescGZIP(), []int{3}
+	return file_clouway_rpc_errdetails_error_details_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ErrorInfo) GetReason() string {
@@ -349,7 +434,7 @@ type QuotaFailure_Violation struct {
 func (x *QuotaFailure_Violation) Reset() {
 	*x = QuotaFailure_Violation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[4]
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -362,7 +447,7 @@ func (x *QuotaFailure_Violation) String() string {
 func (*QuotaFailure_Violation) ProtoMessage() {}
 
 func (x *QuotaFailure_Violation) ProtoReflect() protoreflect.Message {
-	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[4]
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +496,7 @@ type BadRequest_FieldViolation struct {
 func (x *BadRequest_FieldViolation) Reset() {
 	*x = BadRequest_FieldViolation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[5]
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -424,7 +509,7 @@ func (x *BadRequest_FieldViolation) String() string {
 func (*BadRequest_FieldViolation) ProtoMessage() {}
 
 func (x *BadRequest_FieldViolation) ProtoReflect() protoreflect.Message {
-	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[5]
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -487,7 +572,7 @@ type UnprocessableEntityError_FieldViolation struct {
 func (x *UnprocessableEntityError_FieldViolation) Reset() {
 	*x = UnprocessableEntityError_FieldViolation{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[6]
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -500,7 +585,7 @@ func (x *UnprocessableEntityError_FieldViolation) String() string {
 func (*UnprocessableEntityError_FieldViolation) ProtoMessage() {}
 
 func (x *UnprocessableEntityError_FieldViolation) ProtoReflect() protoreflect.Message {
-	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[6]
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -538,6 +623,82 @@ func (x *UnprocessableEntityError_FieldViolation) GetCode() string {
 }
 
 func (x *UnprocessableEntityError_FieldViolation) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+// A field-level validation violation.
+type CanonicalError_FieldViolation struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The reason of the violation.
+	Reason string `protobuf:"bytes,1,opt,name=reason,proto3" json:"reason,omitempty"`
+	// The field that is affected.
+	Field string `protobuf:"bytes,2,opt,name=field,proto3" json:"field,omitempty"`
+	// The stable application-specific error code.
+	Code string `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
+	// The client-safe violation message.
+	Message string `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
+}
+
+func (x *CanonicalError_FieldViolation) Reset() {
+	*x = CanonicalError_FieldViolation{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CanonicalError_FieldViolation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CanonicalError_FieldViolation) ProtoMessage() {}
+
+func (x *CanonicalError_FieldViolation) ProtoReflect() protoreflect.Message {
+	mi := &file_clouway_rpc_errdetails_error_details_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CanonicalError_FieldViolation.ProtoReflect.Descriptor instead.
+func (*CanonicalError_FieldViolation) Descriptor() ([]byte, []int) {
+	return file_clouway_rpc_errdetails_error_details_proto_rawDescGZIP(), []int{3, 0}
+}
+
+func (x *CanonicalError_FieldViolation) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *CanonicalError_FieldViolation) GetField() string {
+	if x != nil {
+		return x.Field
+	}
+	return ""
+}
+
+func (x *CanonicalError_FieldViolation) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CanonicalError_FieldViolation) GetMessage() string {
 	if x != nil {
 		return x.Message
 	}
@@ -591,28 +752,46 @@ var file_clouway_rpc_errdetails_error_details_proto_rawDesc = []byte{
 	0x6c, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x12,
 	0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63,
 	0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x04,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0xae, 0x01,
-	0x0a, 0x09, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x16, 0x0a, 0x06, 0x72,
-	0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61,
-	0x73, 0x6f, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x34, 0x0a, 0x08, 0x6d,
-	0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e,
-	0x45, 0x72, 0x72, 0x6f, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61,
-	0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74,
-	0x61, 0x1a, 0x3b, 0x0a, 0x0d, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74,
-	0x72, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x8f,
-	0x01, 0x0a, 0x2f, 0x63, 0x6f, 0x6d, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x2e, 0x67,
-	0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x61,
-	0x70, 0x69, 0x73, 0x2e, 0x72, 0x70, 0x63, 0x2e, 0x65, 0x72, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69,
-	0x6c, 0x73, 0x42, 0x14, 0x52, 0x70, 0x63, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x44, 0x65, 0x74, 0x61,
-	0x69, 0x6c, 0x73, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x44, 0x67, 0x69, 0x74, 0x68,
-	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x2f, 0x67,
-	0x6f, 0x2d, 0x67, 0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x77,
-	0x61, 0x79, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x72, 0x70, 0x63, 0x2f, 0x65, 0x72, 0x72, 0x64, 0x65,
-	0x74, 0x61, 0x69, 0x6c, 0x73, 0x3b, 0x65, 0x72, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x9a, 0x02,
+	0x0a, 0x0e, 0x43, 0x61, 0x6e, 0x6f, 0x6e, 0x69, 0x63, 0x61, 0x6c, 0x45, 0x72, 0x72, 0x6f, 0x72,
+	0x12, 0x12, 0x0a, 0x04, 0x6b, 0x69, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x6b, 0x69, 0x6e, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73,
+	0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x12, 0x3e, 0x0a, 0x0a, 0x76, 0x69, 0x6f, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x18, 0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x43, 0x61, 0x6e, 0x6f, 0x6e, 0x69, 0x63,
+	0x61, 0x6c, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x2e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x69, 0x6f,
+	0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x0a, 0x76, 0x69, 0x6f, 0x6c, 0x61, 0x74, 0x69, 0x6f,
+	0x6e, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x18, 0x05, 0x20,
+	0x03, 0x28, 0x09, 0x52, 0x07, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x1a, 0x6c, 0x0a, 0x0e,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x69, 0x6f, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x16,
+	0x0a, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e, 0x12, 0x14, 0x0a, 0x05, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x12, 0x0a, 0x04,
+	0x63, 0x6f, 0x64, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65,
+	0x12, 0x18, 0x0a, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0xae, 0x01, 0x0a, 0x09, 0x45,
+	0x72, 0x72, 0x6f, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x61, 0x73,
+	0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x72, 0x65, 0x61, 0x73, 0x6f, 0x6e,
+	0x12, 0x16, 0x0a, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x64, 0x6f, 0x6d, 0x61, 0x69, 0x6e, 0x12, 0x34, 0x0a, 0x08, 0x6d, 0x65, 0x74, 0x61,
+	0x64, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x45, 0x72, 0x72,
+	0x6f, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x2e, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x45,
+	0x6e, 0x74, 0x72, 0x79, 0x52, 0x08, 0x6d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x1a, 0x3b,
+	0x0a, 0x0d, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12,
+	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65,
+	0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x8f, 0x01, 0x0a, 0x2f,
+	0x63, 0x6f, 0x6d, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x2e, 0x67, 0x65, 0x6e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x61, 0x70, 0x69, 0x73,
+	0x2e, 0x72, 0x70, 0x63, 0x2e, 0x65, 0x72, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x42,
+	0x14, 0x52, 0x70, 0x63, 0x45, 0x72, 0x72, 0x6f, 0x72, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73,
+	0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x44, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e,
+	0x63, 0x6f, 0x6d, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x2f, 0x67, 0x6f, 0x2d, 0x67,
+	0x65, 0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x63, 0x6c, 0x6f, 0x75, 0x77, 0x61, 0x79, 0x61,
+	0x70, 0x69, 0x73, 0x2f, 0x72, 0x70, 0x63, 0x2f, 0x65, 0x72, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x73, 0x3b, 0x65, 0x72, 0x72, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x73, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -627,27 +806,30 @@ func file_clouway_rpc_errdetails_error_details_proto_rawDescGZIP() []byte {
 	return file_clouway_rpc_errdetails_error_details_proto_rawDescData
 }
 
-var file_clouway_rpc_errdetails_error_details_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_clouway_rpc_errdetails_error_details_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_clouway_rpc_errdetails_error_details_proto_goTypes = []interface{}{
 	(*QuotaFailure)(nil),                            // 0: QuotaFailure
 	(*BadRequest)(nil),                              // 1: BadRequest
 	(*UnprocessableEntityError)(nil),                // 2: UnprocessableEntityError
-	(*ErrorInfo)(nil),                               // 3: ErrorInfo
-	(*QuotaFailure_Violation)(nil),                  // 4: QuotaFailure.Violation
-	(*BadRequest_FieldViolation)(nil),               // 5: BadRequest.FieldViolation
-	(*UnprocessableEntityError_FieldViolation)(nil), // 6: UnprocessableEntityError.FieldViolation
-	nil, // 7: ErrorInfo.MetadataEntry
+	(*CanonicalError)(nil),                          // 3: CanonicalError
+	(*ErrorInfo)(nil),                               // 4: ErrorInfo
+	(*QuotaFailure_Violation)(nil),                  // 5: QuotaFailure.Violation
+	(*BadRequest_FieldViolation)(nil),               // 6: BadRequest.FieldViolation
+	(*UnprocessableEntityError_FieldViolation)(nil), // 7: UnprocessableEntityError.FieldViolation
+	(*CanonicalError_FieldViolation)(nil),           // 8: CanonicalError.FieldViolation
+	nil,                                             // 9: ErrorInfo.MetadataEntry
 }
 var file_clouway_rpc_errdetails_error_details_proto_depIdxs = []int32{
-	4, // 0: QuotaFailure.violations:type_name -> QuotaFailure.Violation
-	5, // 1: BadRequest.errors:type_name -> BadRequest.FieldViolation
-	6, // 2: UnprocessableEntityError.errors:type_name -> UnprocessableEntityError.FieldViolation
-	7, // 3: ErrorInfo.metadata:type_name -> ErrorInfo.MetadataEntry
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	5, // 0: QuotaFailure.violations:type_name -> QuotaFailure.Violation
+	6, // 1: BadRequest.errors:type_name -> BadRequest.FieldViolation
+	7, // 2: UnprocessableEntityError.errors:type_name -> UnprocessableEntityError.FieldViolation
+	8, // 3: CanonicalError.violations:type_name -> CanonicalError.FieldViolation
+	9, // 4: ErrorInfo.metadata:type_name -> ErrorInfo.MetadataEntry
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_clouway_rpc_errdetails_error_details_proto_init() }
@@ -693,7 +875,7 @@ func file_clouway_rpc_errdetails_error_details_proto_init() {
 			}
 		}
 		file_clouway_rpc_errdetails_error_details_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ErrorInfo); i {
+			switch v := v.(*CanonicalError); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -705,7 +887,7 @@ func file_clouway_rpc_errdetails_error_details_proto_init() {
 			}
 		}
 		file_clouway_rpc_errdetails_error_details_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuotaFailure_Violation); i {
+			switch v := v.(*ErrorInfo); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -717,7 +899,7 @@ func file_clouway_rpc_errdetails_error_details_proto_init() {
 			}
 		}
 		file_clouway_rpc_errdetails_error_details_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BadRequest_FieldViolation); i {
+			switch v := v.(*QuotaFailure_Violation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -729,7 +911,31 @@ func file_clouway_rpc_errdetails_error_details_proto_init() {
 			}
 		}
 		file_clouway_rpc_errdetails_error_details_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*BadRequest_FieldViolation); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_clouway_rpc_errdetails_error_details_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnprocessableEntityError_FieldViolation); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_clouway_rpc_errdetails_error_details_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*CanonicalError_FieldViolation); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -747,7 +953,7 @@ func file_clouway_rpc_errdetails_error_details_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_clouway_rpc_errdetails_error_details_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
